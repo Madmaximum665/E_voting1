@@ -1,0 +1,280 @@
+{
+  "info": {
+    "name": "Election System API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "API endpoints for the Election System"
+  },
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Register User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\"fullName\": \"New Student\",\n\t\"email\": \"student2@example.com\",\n\t\"password\": \"password123\",\n\t\"studentId\": \"S12346\",\n\t\"year\": \"1st Year\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/users/register",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "users", "register"]
+            },
+            "description": "Register a new user"
+          }
+        },
+        {
+          "name": "Login User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\"email\": \"admin@example.com\",\n\t\"password\": \"admin123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/users/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "users", "login"]
+            },
+            "description": "Login and get token"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Get Current User",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-auth-token",
+                "value": "{{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/users/me",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "users", "me"]
+            },
+            "description": "Get current user profile"
+          }
+        },
+        {
+          "name": "Get All Users (Admin)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-auth-token",
+                "value": "{{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/users",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "users"]
+            },
+            "description": "Get all users (admin only)"
+          }
+        },
+        {
+          "name": "Approve Student (Admin)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "x-auth-token",
+                "value": "{{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/users/{{userId}}/approve",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "users", "{{userId}}", "approve"]
+            },
+            "description": "Approve a student account"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Elections",
+      "item": [
+        {
+          "name": "Get All Elections",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/elections",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "elections"]
+            },
+            "description": "Get all elections"
+          }
+        },
+        {
+          "name": "Get Active Elections",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/elections/active",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "elections", "active"]
+            },
+            "description": "Get all active elections"
+          }
+        },
+        {
+          "name": "Get Election by ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/elections/{{electionId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "elections", "{{electionId}}"]
+            },
+            "description": "Get election by ID"
+          }
+        },
+        {
+          "name": "Create Election (Admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-auth-token",
+                "value": "{{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\"title\": \"Student Council Election 2023\",\n\t\"description\": \"Annual election for student council positions\",\n\t\"startDate\": \"2023-11-01T00:00:00.000Z\",\n\t\"endDate\": \"2023-11-07T23:59:59.000Z\",\n\t\"status\": \"draft\",\n\t\"positions\": [\n\t\t{\n\t\t\t\"title\": \"President\",\n\t\t\t\"description\": \"Student body president\",\n\t\t\t\"candidates\": [\n\t\t\t\t{\n\t\t\t\t\t\"name\": \"John Smith\",\n\t\t\t\t\t\"studentId\": \"S12345\",\n\t\t\t\t\t\"manifesto\": \"I will improve campus facilities\"\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\"name\": \"Jane Doe\",\n\t\t\t\t\t\"studentId\": \"S12346\",\n\t\t\t\t\t\"manifesto\": \"I will organize more events\"\n\t\t\t\t}\n\t\t\t]\n\t\t}\n\t]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/elections",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "elections"]
+            },
+            "description": "Create a new election"
+          }
+        },
+        {
+          "name": "Update Election (Admin)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-auth-token",
+                "value": "{{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\"status\": \"active\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/elections/{{electionId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "elections", "{{electionId}}"]
+            },
+            "description": "Update an election"
+          }
+        },
+        {
+          "name": "Vote in Election",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-auth-token",
+                "value": "{{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\"positionId\": \"{{positionId}}\",\n\t\"candidateId\": \"{{candidateId}}\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/elections/{{electionId}}/vote",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "elections", "{{electionId}}", "vote"]
+            },
+            "description": "Vote in an election"
+          }
+        },
+        {
+          "name": "Get Election Results",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/elections/{{electionId}}/results",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "elections", "{{electionId}}", "results"]
+            },
+            "description": "Get election results"
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5000",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "your-auth-token-here",
+      "type": "string"
+    },
+    {
+      "key": "userId",
+      "value": "user-id-here",
+      "type": "string"
+    },
+    {
+      "key": "electionId",
+      "value": "election-id-here",
+      "type": "string"
+    },
+    {
+      "key": "positionId",
+      "value": "position-id-here",
+      "type": "string"
+    },
+    {
+      "key": "candidateId",
+      "value": "candidate-id-here",
+      "type": "string"
+    }
+  ]
+} 
